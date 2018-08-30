@@ -11,12 +11,33 @@ let commentList = document.getElementById('list')
 
 // automatically adds one to counter every second
 let interval = setInterval(addOne, 1000)
+
+// adds a like to number
+let likeANumber = function likeNumber() {
+  let likedNumbers = []
+  return function () {
+    if (!likedNumbers.includes(number)) {
+      likedNumbers.push(number)
+      numberOfLikes = 1
+      let likeListItem = document.createElement('li')
+      likeListItem.id = number
+      likeListItem.innerHTML = `<li>${number} has been liked ${numberOfLikes} time</li>`
+      return likeList.appendChild(likeListItem)
+    } else {
+      numberOfLikes += 1
+      likeListItem = document.getElementById(number)
+      likeListItem.innerHTML = `<li>${number} has been liked ${numberOfLikes} times</li>`
+      return likeList
+    }
+  }
+}()
+
 // adds one to counter when + is clicked
 plus.addEventListener('click', addOne)
 // subtracts one from counter when - is clicked
 minus.addEventListener('click', subtractOne)
 // like a number when <3 is clicked
-like.addEventListener('click', function(){likeANumber(number)})
+like.addEventListener('click', likeANumber)
 // pause the game when pause is clicked
 pause.addEventListener('click', pauseGame)
 // add a comment when form is submitted
@@ -34,25 +55,6 @@ function subtractOne() {
   counter.innerText = number
   return counter.innerText
 }
-//adds a like to number
-let likeANumber = function likeNumber(number) {
-  let likedNumbers = []
-  return function (number) {
-    if (!likedNumbers.includes(number)) {
-      likedNumbers.push(number)
-      numberOfLikes = 1
-      let likeListItem = document.createElement('li')
-      likeListItem.id = number
-      likeListItem.innerHTML = `<li>${number} has been liked ${numberOfLikes} time</li>`
-      return likeList.appendChild(likeListItem)
-    } else {
-      numberOfLikes += 1
-      likeListItem = document.getElementById(number)
-      likeListItem.innerHTML = `<li>${number} has been liked ${numberOfLikes} times</li>`
-      return likeList
-    }
-  }
-}()
 
 //pause the game
 function pauseGame() {
